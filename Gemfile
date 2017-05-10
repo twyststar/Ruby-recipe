@@ -8,6 +8,7 @@ gem("pg")
 gem("sinatra")
 gem("pry")
 gem("actionview")
+gem("shoulda-matchers")
 
 group(:test) do
   gem("rspec")
