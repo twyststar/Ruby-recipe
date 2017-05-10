@@ -15,19 +15,17 @@ ActiveRecord::Schema.define(version: 20170510165344) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "combos", force: :cascade do |t|
+    t.integer "ingredient_id"
+    t.integer "recipe_id"
+    t.float "quantity_required"
+    t.string "quantity_units"
+  end
+
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
     t.float "quantity_available"
     t.string "quantity_units"
-  end
-
-  create_table "ingredients_recipes", force: :cascade do |t|
-    t.bigint "ingredients_id"
-    t.bigint "recipes_id"
-    t.float "quantity_required"
-    t.string "quantity_units"
-    t.index ["ingredients_id"], name: "index_ingredients_recipes_on_ingredients_id"
-    t.index ["recipes_id"], name: "index_ingredients_recipes_on_recipes_id"
   end
 
   create_table "recipes", force: :cascade do |t|

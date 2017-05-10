@@ -5,9 +5,9 @@ class AddTables < ActiveRecord::Migration[5.1]
       t.column :quantity_available, :float
       t.column :quantity_units, :string
     end
-    create_table :ingredients_recipes do |t|
-      t.belongs_to :ingredients, index: true
-      t.belongs_to :recipes, index: true
+    create_table :combos do |t|
+      t.column :ingredient_id, :integer
+      t.column :recipe_id, :integer
       t.column :quantity_required, :float
       t.column :quantity_units, :string
     end

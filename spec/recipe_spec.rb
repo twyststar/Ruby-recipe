@@ -9,6 +9,11 @@ describe(Recipe) do
     expect(recipe.tags()).to(eq([tag1, tag2]))
   end
 
+  it("ingredients empty at first") do
+    recipe = Recipe.create({:name => "recipe"})
+    expect(recipe.ingredients()).to(eq([]))
+  end
+
   it("has many ingredients") do
     recipe = Recipe.create({:name => "recipe"})
     ingredient1 = Ingredient.create({:name => "ingredient1"})
