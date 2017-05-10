@@ -1,0 +1,79 @@
+
+<h1> <%= @recipe.name %></h1>
+
+<div class="col-sm-2">
+  <% if not @recipe.ingredients().nil? %>
+    <h3>Add ingredients:</h3>
+    <form action="/recipe/<%= @recipe.id() %>/ingredient" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <div class="input-group">
+        <% @recipe.not_ingredients.each() do |ingredient| %>
+          <input type="checkbox" name="ingredient_ids[]" aria-label="..." value="<%= ingredient.id() %>">&nbsp;&nbsp;<%= ingredient.name() %>
+          <br>
+        <% end %>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Add ingredients to <%= @recipe.name %></button>
+    </form>
+  <% end %>
+  <br>
+  <h4>Add a new ingredient to the <%= @recipe.name %></h4>
+  <form action="/recipe/<%= @recipe.id() %>/ingredient" method="post">
+    <div class="form_group">
+      <input type="text" name="name">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Make a new ingredient</button>
+  </form>
+</div>
+<div class="col-sm-8">
+  <%if @recipe.ingredients%>
+    <h3>Ingredients</h3>
+    <ul>
+      <% @recipe.ingredients.each() do |ingredient|%>
+        <li><%= ingredient.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <h3>Instructions:</h3>
+  <br>
+  <% if @recipe.instructions %>
+    <p>
+      <%= @recipe.instructions %>
+    </p>
+  <% end %>
+  <br>
+  <h3>Update recipe</h3>
+  <form action="/recipe/<%= @recipe.id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <div class="form_group">
+      <label for="name">Change recipe name</label>
+      <br>
+      <input type="text" name="name">
+    </div>
+    <br>
+    <div class="form_group">
+      <label for="instructions">Change recipe instructions</label>
+      <textarea class="form-control" name="instructions" rows="3"></textarea>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Update Recipe</button>
+  </form>
+</div>
+<div class="col-sm-2">
+  <%if not @tags.nil?%>
+    <h3>Categories</h3>
+    <% @tags.each() do |tag|%>
+      <a href="/tag/<%= tag.id %>"><%= tag.name() %></a> <br>
+    <% end %>
+  <% end %>
+  <br>
+  <h4>Add a category</h4>
+  <form action="/tag" method="post">
+    <div class="form_group">
+      <input type="text" name="name">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Make a new category</button>
+  </form>
+</div>
