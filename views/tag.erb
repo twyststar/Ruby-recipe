@@ -1,0 +1,52 @@
+<h1> <%= @tag.name %> </h1>
+
+<div class="col-md-2">
+  <% if @tag.not_recipes %>
+    <h3>Add recipes:</h3>
+    <form action="/tag/<%= @recipe.id() %>/recipe" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <div class="input-group">
+        <% @tag.not_recipes.each() do |recipe| %>
+          <div class="checkbox">
+            <input type="checkbox" name="recipe_ids[]" aria-label="..." value="<%= recipe.id() %>">&nbsp;&nbsp;<%= recipe.name() %>
+          </div>
+        <% end %>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Add ingredients to <%= @recipe.name %></button>
+    </form>
+  <% end %>
+</div>
+
+<div class="col-md-8">
+  <div class="jumbotron">
+    <% if @tag.recipes() != [] %>
+      <h3><i><%= @tag.name %></i> recipes</h3>
+      <% @tag.recipes.each() do |recipe| %>
+        <a href="/recipe/<%= recipe.id %>"><%= recipe.name() %></a> <br>
+      <% end %>
+    <% end %>
+  </div>
+  <form action="/" method="get">
+    <button type="submit" class="btn btn-success btn-block">Go back to main page</button>
+  </form>
+</div>
+
+<div class="col-md-2">
+  <h3>Edit Category</h3>
+  <form action="/tag/<%= @tag.id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <div class="form_group">
+      <label for="name">Change Category name</label>
+      <br>
+      <input type="text" name="name">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Update Category</button>
+  </form>
+  <br>
+  <form action="/tag/<%= @tag.id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit" class="btn btn-danger">Delete Category</button>
+  </form>
+</div>

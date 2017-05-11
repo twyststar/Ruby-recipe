@@ -1,0 +1,128 @@
+<h1><%= @recipe.name %></h1>
+
+<div class="row">
+  <div class="col-sm-2">
+    <% if not @recipe.ingredients().nil? %>
+      <h3>Add ingredients:</h3>
+      <form action="/recipe/<%= @recipe.id() %>/ingredient" method="post">
+        <input type="hidden" name="_method" value="patch">
+        <div class="input-group">
+          <% @recipe.not_ingredients.each() do |ingredient| %>
+            <div class="checkbox">
+              <input type="checkbox" name="ingredient_ids[]" aria-label="..." onClick="dynamicInput(this)" value="<%= ingredient.id() %>">&nbsp;&nbsp;<%= ingredient.name() %>
+              <p id="<%= ingredient.id() %>"></p>
+            </div>
+          <% end %>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Add ingredients to <%= @recipe.name %></button>
+      </form>
+    <% end %>
+    <br>
+    <h4>Add a new ingredient to the <%= @recipe.name %></h4>
+    <form action="/recipe/<%= @recipe.id() %>/ingredient" method="post">
+      <input type="text" name="name">
+      <label for="quantity">Quantity per <%= @recipe.name %> </label>
+      <input type="number" name="quantity" >
+      <label for="units">Units</label>
+      <input type="text" name="units">
+      <br>
+      <br>
+      <button type="submit" class="btn btn-primary">Make a new ingredient</button>
+    </form>
+  </div>
+
+  <div class="col-sm-8">
+    <div class="jumbotron">
+      <h3>Update recipe </h3>
+      <form action="/recipe/<%= @recipe.id %>" method="post">
+        <input type="hidden" name="_method" value="patch">
+        <div class="form_group">
+          <label for="name">Change recipe name</label>
+          <br>
+          <input type="text" name="name">
+        </div>
+        <br>
+        <div class="form_group">
+          <label for="instructions">Change recipe instructions</label>
+          <textarea class="form-control" name="instructions" rows="3"></textarea>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Update Recipe</button>
+      </form>
+      <br>
+      <% if @recipe.combos %>
+        <h3>Select ingredients to remove:</h3>
+        <form action="/recipe/edit/<%= @recipe.id() %>/ingredient" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <div class="input-group">
+            <% @recipe.combos.each() do |combo| %>
+              <% @recipe.ingredients.each() do |ingredient| %>
+                <% if ingredient.id == combo.ingredient_id %>
+                  <input type="checkbox" name="ingredient_ids[]" aria-label="..." value="<%= ingredient.id() %>">&nbsp;&nbsp;
+                  <% if combo.quantity_required() %>
+                    <%=ingredient.name() + ", " + combo.quantity_required().to_s + " " + combo.quantity_units() %>
+                  <% else %>
+                    <%= ingredient.name() %>
+                  <% end %>
+                  <br>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+          <br>
+
+          <button type="submit" class="btn btn-primary">Remove ingredients from <%= @recipe.name %></button>
+        </form>
+      <% end %>
+      <br>
+      <form action="/recipe" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="btn btn-danger">Delete Recipe</button>
+      </form>
+    </div>
+    <form class="" action="/recipe/<%= @recipe.id %>" method="get">
+      <button type="submit" class="btn btn-block btn-success">Go back to recipe</button>
+    </form>
+  </div>
+  <div class="col-sm-2">
+    <% if not @recipe.tags().nil? %>
+      <h3>Add tags:</h3>
+      <form action="/recipe/<%= @recipe.id() %>/tag" method="post">
+        <input type="hidden" name="_method" value="patch">
+        <div class="input-group">
+          <% @recipe.not_tags.each() do |tag| %>
+            <input type="checkbox" name="tag_ids[]" aria-label="..." value="<%= tag.id() %>">&nbsp;&nbsp;<%= tag.name() %>
+            <br>
+          <% end %>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Add categories to <%= @recipe.name %></button>
+      </form>
+    <% end %>
+    <br>
+    <h4>Add a new category to the <%= @recipe.name %></h4>
+    <form action="/recipe/<%= @recipe.id() %>/tag" method="post">
+      <div class="form_group">
+        <input type="text" name="name">
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Make a new category</button>
+    </form>
+    <!-- <%if not @tags.nil?%>
+      <h3>Categories</h3>
+      <% @tags.each() do |tag|%>
+        <a href="/tag/<%= tag.id %>"><%= tag.name() %></a> <br>
+      <% end %>
+    <% end %>
+    <br>
+    <h4>Add a category</h4>
+    <form action="/tag" method="post">
+      <div class="form_group">
+        <input type="text" name="name">
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Make a new category</button>
+    </form> -->
+  </div>
+</div>
