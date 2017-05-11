@@ -3,7 +3,7 @@
 <div class="col-md-2">
   <% if @tag.not_recipes %>
     <h3>Add recipes:</h3>
-    <form action="/tag/<%= @recipe.id() %>/recipe" method="post">
+    <form action="/tag/<%= @tag.id() %>/recipe" method="post">
       <input type="hidden" name="_method" value="patch">
       <div class="input-group">
         <% @tag.not_recipes.each() do |recipe| %>
@@ -13,7 +13,7 @@
         <% end %>
       </div>
       <br>
-      <button type="submit" class="btn btn-primary">Add ingredients to <%= @recipe.name %></button>
+      <button type="submit" class="btn btn-primary">Add recipes to <%= @tag.name %></button>
     </form>
   <% end %>
 </div>

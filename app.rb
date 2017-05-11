@@ -132,3 +132,12 @@ patch '/tag/:id' do
   tag.update({:name => params[:name]})
   redirect ('/tag/' + (params[:id]))
 end
+
+patch '/tag/:id/recipe' do
+  tag = Tag.find(params[:id])
+  recipe_ids = params[:recipe_ids]
+  recipe_ids.each do |id|
+    tag.recipes.push(Recipe.find(id))
+  end
+  redirect ('/tag/' + (params[:id]))
+end
